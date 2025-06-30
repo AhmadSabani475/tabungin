@@ -1,0 +1,17 @@
+# Ignore Node.js
+/frontend/node_modules
+/frontend/dist
+
+# Ignore Java target folder
+/backend/target
+
+# IntelliJ
+*.iml
+.idea/
+
+# VSCode
+.vscode/
+
+# OS generated
+.DS_Store
+Thumbs.db
