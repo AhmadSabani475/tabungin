@@ -13,7 +13,7 @@ function HomePage() {
   const { goals = [] } = useSelector((states) => states);
   const dispatch = useDispatch();
   const [sortBy, setSortBy] = useState("namaTabungan");
-  const [urutan, setUrutan] = useState("naik"); // "naik" = ascending, "turun" = descending
+  const [urutan, setUrutan] = useState("naik"); 
   const location = useLocation();
   const [alertData, setAlertData] = useState(null);
 
@@ -21,13 +21,13 @@ function HomePage() {
     if (location.state?.alert) {
       setAlertData(location.state.alert);
 
-      window.history.replaceState({}, document.title); // <- pindahkan ke sini
+      window.history.replaceState({}, document.title); 
 
       const timeout = setTimeout(() => {
         setAlertData(null);
       }, 4000);
 
-      return () => clearTimeout(timeout); // <- ini tetap di dalam useEffect
+      return () => clearTimeout(timeout); 
     }
   }, [location.state]);
   useEffect(() => {

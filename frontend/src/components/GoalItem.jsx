@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, CardFooter } from "./ui/card";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import iphone from "../assets/iphone.jpg";
 import { useNavigate } from "react-router";
 function GoalItem({
@@ -16,7 +15,7 @@ function GoalItem({
   const displayImage = imageUrl || iphone;
   const persen = Math.min(Math.round((nominalTerkumpul / target) * 100), 100);
   const sisa = target - nominalTerkumpul;
-  const estimasiDurasi = Math.ceil(sisa / nominalRutin); // dalam jumlah "frekuensi"
+  const estimasiDurasi = Math.ceil(sisa / nominalRutin); 
   let estimasiTeks = `${estimasiDurasi} ${frekuensi.toLowerCase()} lagi`;
   const sudahTercapai = nominalTerkumpul >= target;
 
@@ -25,7 +24,6 @@ function GoalItem({
       navigate(`/goal/${id}`);
     }
   };
-  // console.log("Image URL:", imageUrl);
   return (
     <Card className="bg-[#213448] w-full cursor-pointer " onClick={onClick}>
       <div className="relative flex p-2 border-b gap-16 text-white">
@@ -35,7 +33,7 @@ function GoalItem({
             alt={`Tabungan ${namaTabungan}`}
             className="mx-auto rounded-lg object-cover dark:brightness-[0.2] dark:grayscale"
             onError={(e) => {
-              e.target.src = iphone; // Fallback jika gambar error
+              e.target.src = iphone; 
             }}
           />
         </div>

@@ -66,17 +66,17 @@ function asyncAddGoal({
         tanggalDibuat,
         gambar,
       });
-      console.log("Response dari API createGoal:", data);
+    
       if (error) {
         throw new Error(message || "Gagal menambahkan tabungan");
       }
 
-      dispatch(addGoalActionCreator(data.goal)); // Sesuaikan dengan struktur response
-      return { success: true, data }; // Return untuk feedback di komponen
+      dispatch(addGoalActionCreator(data.goal)); 
+      return { success: true, data };
     } catch (error) {
       console.error("Add goal error:", error);
       alert(error.message);
-      return { success: false, message: error.message }; // Return error state
+      return { success: false, message: error.message }; 
     } finally {
       dispatch(hideLoading());
     }

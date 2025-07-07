@@ -39,7 +39,7 @@ function AddPage() {
         navigate("/", {
           state: {
             alert: {
-              variant: "success", // bisa kamu sesuaikan: "success", "destructive", dll
+              variant: "destructive",
               title: "Berhasil!",
               description: "Tabungan berhasil ditambahkan.",
             },

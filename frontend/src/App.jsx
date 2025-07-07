@@ -44,13 +44,12 @@ function App() {
         </main>
       ) : (
         <div className="relative min-h-screen w-full overflow-hidden">
-          {/* Background tetap (tidak geser) */}
+
           <div
             className="fixed inset-0 bg-cover bg-center bg-no-repeat bg-fixed -z-10"
             style={{ backgroundImage: `url(${tampilan})` }}
           ></div>
 
-          {/* Konten utama */}
           <div className="flex min-h-screen">
             <Sidebar signOut={signout} />
             <main className="w-full ml-52 p-6 overflow-y-auto">

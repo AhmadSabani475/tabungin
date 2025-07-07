@@ -23,7 +23,7 @@ public class SavingsGoal {
     private String namaTabungan;
     private BigDecimal target;
     private BigDecimal nominalRutin;
-    private String frekuensi; // Harian, Mingguan, Bulanan
+    private String frekuensi;
 
     @ElementCollection
     private List<String> hari;
@@ -31,8 +31,8 @@ public class SavingsGoal {
     private String mataUang;
     private LocalDate tanggalDibuat;
     private BigDecimal nominalTerkumpul = BigDecimal.ZERO;
-    private String status = "BERLANGSUNG"; // atau TERCAPAI
-    private String gambar; // simpan URL atau nama file
+    private String status = "BERLANGSUNG";
+    private String gambar;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

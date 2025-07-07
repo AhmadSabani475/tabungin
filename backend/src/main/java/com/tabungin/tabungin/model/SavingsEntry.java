@@ -22,4 +22,7 @@ public class SavingsEntry {
     private BigDecimal nominal;
 
     private LocalDate tanggal;
+    private String jenisTransaksi;
+    private String keterangan;
+
 }

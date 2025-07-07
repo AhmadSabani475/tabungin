@@ -6,8 +6,6 @@ function GoalTerkumpul({ target, terkumpul, entries }) {
 
   return (
     <div className="p-4 flex flex-col gap-4 w-full">
-      {" "}
-      {/* Tambahkan wrapper div yang sama */}
       <Card className="bg-[#213448] w-full shadow-2xl shadow-black text-white">
         <div className="flex justify-around mx-4 text-xl border-b border-white p-2">
           <div className="text-center">

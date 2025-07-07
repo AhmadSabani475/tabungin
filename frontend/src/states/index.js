@@ -14,6 +14,6 @@ const store = configureStore({
     goalDetail: goalDetailReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(loadingBarMiddleware()), // ⬅️ Tambahkan ini
+    getDefaultMiddleware().concat(loadingBarMiddleware()), 
 });
 export default store;

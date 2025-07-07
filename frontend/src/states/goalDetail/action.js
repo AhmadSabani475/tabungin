@@ -70,18 +70,17 @@ function asyncAddEntry(goalId, entryData) {
     const { nominal, keterangan, tanggal, jenisTransaksi } = entryData;
 
     try {
-      const { error, data } = await api.addEntry(goalId, {
+      const {  data } = await api.addEntry(goalId, {
         nominal,
         keterangan,
         tanggal,
         jenisTransaksi,
       });
-      console.log("data:", data);
 
       dispatch(addEntryActionCreator(data.entry));
       dispatch(asyncReceiveGoalDetail(goalId));
       return { success: true };
-    } catch (error) {
+    } catch  {
       return { success: false };
     }
   };
@@ -103,11 +102,10 @@ function asyncReceiveGoalDetail(goalId) {
     dispatch(clearGoalDetailActionCreator());
     dispatch(showLoading());
     try {
-      // Ambil detail goal
+
       const goalResponse = await api.getDetailGoal(goalId);
       const goal = goalResponse.data;
 
-      // Ambil entries (isi tabungan)
       const entriesResponse = await api.getEntries(goalId);
       const entries = entriesResponse.data.entries || [];
       const totalTerkumpul = entries.reduce(
@@ -115,7 +113,6 @@ function asyncReceiveGoalDetail(goalId) {
         0
       );
 
-      // Gabungkan semua ke dalam goalDetail
       const goalDetail = {
         ...goal,
         entries,

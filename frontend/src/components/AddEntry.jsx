@@ -43,16 +43,13 @@ function AddEntry({ goalId }) {
         })
       );
 
-      await dispatch(asyncReceiveGoalDetail(goalId)); // Pastikan goalDetail.entries update
-
-      // Reset form
+      await dispatch(asyncReceiveGoalDetail(goalId)); 
       setNominal("");
       setKeterangan("");
       setOption("TAMBAH");
       setOpen(false);
     } catch (err) {
       console.error("Gagal tambah entry:", err);
-      // Tambahkan alert atau toast error jika perlu
     } finally {
       setIsSubmitting(false);
     }

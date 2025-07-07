@@ -4,7 +4,7 @@ function Loading() {
   return (
     <div className="fixed top-0 left-0 w-full z-50">
       <LoadingBar
-        style={{ height: "4px", backgroundColor: "#3b82f6" }} // warna biru terang supaya kelihatan
+        style={{ height: "4px", backgroundColor: "#3b82f6" }} 
       />
     </div>
   );

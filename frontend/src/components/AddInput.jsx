@@ -43,8 +43,8 @@ function AddInput({ onAdd }) {
       target: parseFloat(target),
       nominalRutin: parseFloat(nominalPengisian),
       frekuensi: rencana,
-      hari: rencana === "mingguan" ? "senin" : null, // Default hari Senin jika mingguan
-      mataUang: "IDR", // Default Rupiah
+      hari: rencana === "mingguan" ? "senin" : null, 
+      mataUang: "IDR", 
       tanggalDibuat: new Date().toISOString(),
       gambar: selectedFile,
     });

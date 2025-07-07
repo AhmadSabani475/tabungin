@@ -23,7 +23,7 @@ function unsetAuthUserActionCreator() {
 }
 function asyncSetAuthUser({ email, password }) {
   return async (dispatch) => {
-    dispatch(showLoading()); // 👈 tampilkan loading
+    dispatch(showLoading()); 
 
     try {
       const response = await api.login({ email, password });
@@ -35,7 +35,7 @@ function asyncSetAuthUser({ email, password }) {
       alert(error.message);
     }
 
-    dispatch(hideLoading()); // 👈 sembunyikan loading
+    dispatch(hideLoading()); 
   };
 }
 

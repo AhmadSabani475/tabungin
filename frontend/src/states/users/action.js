@@ -3,13 +3,13 @@ import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 function asyncRegister({ name, email, password }) {
   return async (dispatch) => {
-    dispatch(showLoading()); // <-- Tampilkan loading bar
+    dispatch(showLoading());
     try {
       await api.register({ name, email, password });
     } catch (error) {
       alert(error.message);
     }
-    dispatch(hideLoading()); // <-- Sembunyikan loading bar
+    dispatch(hideLoading());
   };
 }
 export { asyncRegister };

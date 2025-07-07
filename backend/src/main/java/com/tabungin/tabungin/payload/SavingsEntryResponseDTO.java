@@ -14,7 +14,9 @@ import java.time.LocalDate;
 @Builder
 public class SavingsEntryResponseDTO {
     private Long id;
-    private Long goalId; // ✅ Pastikan ini ADA
+    private Long goalId;
     private BigDecimal nominal;
+    private String jenisTransaksi; // "TAMBAH" atau "KURANG"
+    private String keterangan;
     private LocalDate tanggal;
 }

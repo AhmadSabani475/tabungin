@@ -48,19 +48,16 @@ function DetailPage() {
   const handleDelete = async () => {
     setOpenDialog(false);
 
-    // Tunggu proses delete selesai
     await dispatch(asyncDeleteGoal(id));
 
-    // Tunggu goals diperbarui
     await dispatch(asyncReceiveGoals());
 
-    // Setelah semuanya selesai, baru navigasi
     navigate("/", {
       state: {
         alert: {
           title: "Berhasil!",
           description: "Target tabungan berhasil dihapus.",
-          variant: "default", // atau "destructive" jika error
+          variant: "default", 
         },
       },
     });
