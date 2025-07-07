@@ -12,19 +12,19 @@ function GoalDetail({
 }) {
   return (
     <div className="p-4 flex flex-col gap-4 w-full ">
-      <div className="w-full mx-auto bg-white  flex justify-center">
+      <div className="w-full mx-auto    flex justify-center">
         <img
-          src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-          alt="Goal Target"
+          src={gambar}
+          alt={`Tabungan ${gambar}`}
           className="h-[350px] w-full rounded-lg object-cover"
         />
       </div>
       <Card className="bg-[#213448] w-full  p-4 shadow-2xl shadow-black">
         <div className="flex border-b border-b-white justify-between items-center p-2 ">
           <div className="text-white ">
-            <h2 className="text-2xl ">{target}</h2>
+            <h2 className="text-2xl ">Rp. {target.toLocaleString()}</h2>
             <p className="text-md ">
-              Rp. {nominalPerhari}/{frekuensi}
+              Rp. {nominalPerhari.toLocaleString()}/{frekuensi}
             </p>
           </div>
           <div className=" w-24 h-24 border-2 border-white rounded-full bg-[#213448] text-center flex items-center justify-center">

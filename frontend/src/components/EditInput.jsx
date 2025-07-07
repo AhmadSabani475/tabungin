@@ -1,22 +1,35 @@
-import useInput from "@/hooks/useInput";
+import React, { useState, useEffect } from "react";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { BarChart3, Target } from "lucide-react";
-import React, { useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-function AddInput({ onAdd }) {
-  const [nama, onNama] = useInput();
-  const [target, onTarget] = useInput();
-  const [rencana, onRencana] = useInput("harian");
-  const [nominalPengisian, onNominnalPengisian] = useInput();
+
+function EditInput({ data, onSubmit }) {
+  const [nama, setNama] = useState(data.namaTabungan || "");
+  const [target, setTarget] = useState(data.target || "");
+  const [rencana, setRencana] = useState(data.frekuensi || "harian");
+  const [nominal, setNominal] = useState(data.nominalRutin || "");
   const [previewImage, setPreviewImage] = useState(
-    "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+    data?.gambar
+      ? `http://localhost:8081/uploads/${data.gambar}`
+      : "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
   );
+
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleRencanaChange = (value) => {
-    onRencana({ target: { value } });
-  };
+  useEffect(() => {
+    if (data) {
+      setNama(data.namaTabungan || "");
+      setTarget(data.target || "");
+      setRencana(data.frekuensi || "harian");
+      setNominal(data.nominalRutin || "");
+      setPreviewImage(
+        data?.gambar
+          ? `http://localhost:8081/uploads/${data.gambar}`
+          : "https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+      );
+    }
+  }, [data]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -32,32 +45,19 @@ function AddInput({ onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!nama || !target || !nominalPengisian) {
-      alert("Harap lengkapi semua field yang diperlukan!");
-      return;
-    }
-
-    onAdd({
+    const formData = {
       namaTabungan: nama,
-      target: parseFloat(target),
-      nominalRutin: parseFloat(nominalPengisian),
+      target,
       frekuensi: rencana,
-      hari: rencana === "mingguan" ? "senin" : null, // Default hari Senin jika mingguan
-      mataUang: "IDR", // Default Rupiah
-      tanggalDibuat: new Date().toISOString(),
-      gambar: selectedFile,
-    });
+      nominalRutin: nominal,
+      gambar: selectedFile ? previewImage : data.gambar,
+      file: selectedFile || null,
+    };
+    onSubmit(formData);
   };
-  console.log("File yang dikirim:", selectedFile);
-  console.log("Tipe:", typeof selectedFile);
 
   return (
-    <form
-      action=""
-      className="flex gap-4 justify-between"
-      onSubmit={handleSubmit}
-    >
+    <form onSubmit={handleSubmit} className="flex gap-4 justify-between">
       <div className="w-3/4">
         <AspectRatio
           ratio={16 / 9}
@@ -84,6 +84,7 @@ function AddInput({ onAdd }) {
           onChange={handleImageUpload}
           accept="image/*"
         />
+
         <div className="p-2 my-2 flex flex-col gap-4">
           <div className="flex gap-4 items-center">
             <div className="font-bold text-3xl">
@@ -94,9 +95,10 @@ function AddInput({ onAdd }) {
               type="text"
               placeholder="Nama Tabungan"
               value={nama}
-              onChange={onNama}
+              onChange={(e) => setNama(e.target.value)}
             />
           </div>
+
           <div className="flex gap-4 items-center">
             <div className="font-bold text-3xl">
               <Target />
@@ -106,59 +108,45 @@ function AddInput({ onAdd }) {
               type="text"
               placeholder="Target Tabungan"
               value={target}
-              onChange={onTarget}
+              onChange={(e) => setTarget(e.target.value)}
             />
           </div>
-          <h2 className="text-xl font-bold ">Rencana Pengisian</h2>
+
+          <h2 className="text-xl font-bold">Rencana Pengisian</h2>
           <div className="flex flex-col gap-4">
             <div className="flex rounded-3xl border border-black justify-around w-full bg-gray-100 overflow-hidden">
-              <button
-                type="button"
-                className={`border-r border-black py-2 px-4 hover:bg-gray-200 w-full ${
-                  rencana === "harian" ? "bg-gray-300" : ""
-                }`}
-                onClick={() => handleRencanaChange("harian")}
-              >
-                Harian
-              </button>
-              <button
-                type="button"
-                className={`border-r border-black py-2 px-4 hover:bg-gray-200 w-full ${
-                  rencana === "mingguan" ? "bg-gray-300" : ""
-                }`}
-                onClick={() => handleRencanaChange("mingguan")}
-              >
-                Mingguan
-              </button>
-              <button
-                type="button"
-                className={`py-2 px-4 hover:bg-gray-200 w-full ${
-                  rencana === "bulanan" ? "bg-gray-300" : ""
-                }`}
-                onClick={() => handleRencanaChange("bulanan")}
-              >
-                Bulanan
-              </button>
+              {["harian", "mingguan", "bulanan"].map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  className={`py-2 px-4 w-full hover:bg-gray-200 ${
+                    rencana === item ? "bg-gray-300" : ""
+                  } ${item !== "bulanan" ? "border-r border-black" : ""}`}
+                  onClick={() => setRencana(item)}
+                >
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </button>
+              ))}
             </div>
             <Input
               className="bg-white"
-              type="text"
+              type="number"
               placeholder="Nominal Pengisian"
-              value={nominalPengisian}
-              onChange={onNominnalPengisian}
+              value={nominal}
+              onChange={(e) => setNominal(e.target.value)}
             />
           </div>
+
+          <button
+            type="submit"
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          >
+            Simpan Perubahan
+          </button>
         </div>
-      </div>
-      <div>
-        <button
-          type="submit"
-          className="bg-[#0AB1DD] text-black p-4 rounded-3xl hover:text-white cursor-pointer"
-        >
-          Simpan
-        </button>
       </div>
     </form>
   );
 }
-export default AddInput;
+
+export default EditInput;

@@ -1,4 +1,5 @@
 import { api } from "@/utilty/api";
+import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const ActionType = {
   SET_AUTH_USER: "SET_AUTH_USER",
@@ -22,6 +23,8 @@ function unsetAuthUserActionCreator() {
 }
 function asyncSetAuthUser({ email, password }) {
   return async (dispatch) => {
+    dispatch(showLoading()); // 👈 tampilkan loading
+
     try {
       const response = await api.login({ email, password });
       const { token } = response.data.token;
@@ -31,15 +34,20 @@ function asyncSetAuthUser({ email, password }) {
     } catch (error) {
       alert(error.message);
     }
+
+    dispatch(hideLoading()); // 👈 sembunyikan loading
   };
 }
 
 function asyncUnsetAuthUser() {
   return async (dispatch) => {
+    dispatch(showLoading());
     dispatch(unsetAuthUserActionCreator());
     api.putAccessToken("");
+    dispatch(hideLoading());
   };
 }
+
 export {
   ActionType,
   setAuthUserActionCreator,

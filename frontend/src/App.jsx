@@ -11,49 +11,60 @@ import Sidebar from "./components/Sidebar";
 import tampilan from "./assets/Tampilan.jpg";
 import AddPage from "./pages/AddPage";
 import DetailPage from "./pages/DetailPage";
+import EditPage from "./pages/EditPage";
+import TercapaiPage from "./pages/TercapaiPage";
+
 function App() {
   const { authUser = null, isPreload = false } = useSelector(
     (states) => states
   );
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(asyncPreloadProcess());
   }, [dispatch]);
+
   const signout = () => {
     dispatch(asyncUnsetAuthUser());
   };
+
   if (isPreload) {
-    return null;
+    return <Loading />;
   }
-  if (authUser == null) {
-    return (
-      <>
-        <Loading />
+
+  return (
+    <>
+      <Loading />
+      {authUser == null ? (
         <main>
           <Routes>
             <Route path="/*" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </main>
-      </>
-    );
-  }
-  return (
-    <>
-      <Loading />
-      <div
-        style={{ backgroundImage: `url(${tampilan})` }}
-        className=" flex bg-cover bg-center min-h-screen  "
-      >
-        <Sidebar signOut={signout} />
-        <main className="w-full p-8">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/goals/create" element={<AddPage />} />
-            <Route path="/goal/:id" element={<DetailPage />} />
-          </Routes>
-        </main>
-      </div>
+      ) : (
+        <div className="relative min-h-screen w-full overflow-hidden">
+          {/* Background tetap (tidak geser) */}
+          <div
+            className="fixed inset-0 bg-cover bg-center bg-no-repeat bg-fixed -z-10"
+            style={{ backgroundImage: `url(${tampilan})` }}
+          ></div>
+
+          {/* Konten utama */}
+          <div className="flex min-h-screen">
+            <Sidebar signOut={signout} />
+            <main className="w-full ml-52 p-6 overflow-y-auto">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/goals/create" element={<AddPage />} />
+                <Route path="/goal/:id" element={<DetailPage />} />
+                <Route path="/goal/edit/:id" element={<EditPage />} />
+                <Route path="/tercapai" element={<TercapaiPage />} />
+              </Routes>
+            </main>
+          </div>
+        </div>
+      )}
     </>
   );
 }
